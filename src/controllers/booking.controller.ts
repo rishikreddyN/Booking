@@ -1,4 +1,4 @@
-import { confirmBooking, finalizeBooking } from "../repositories/booking.repository";
+
 import { confirmBookingService, createBookingService } from "../services/booking.service"
 
 import { Request,Response } from "express";
