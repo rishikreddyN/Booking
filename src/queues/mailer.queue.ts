@@ -7,4 +7,3 @@ export const mailerQueue=new Queue(MAILER_QUEUE,{
     connection:getRedis(),
 });
 
-  

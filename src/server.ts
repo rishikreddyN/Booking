@@ -5,7 +5,7 @@ import v2Router from './routers/v2/index.router';
 import { appErrorHandler, genericErrorHandler } from './middlewares/error.middleware';
 import logger from './config/logger.config';
 import { attachCorrelationIdMiddleware } from './middlewares/correlation.middleware';
-import { setupMailerWorker } from './processors/email.processor';
+import { setupMailerWorker } from './processors/mailer.processor';
 import {addEmailToQueue} from "./producers/email.producer";
 const app = express();
 
