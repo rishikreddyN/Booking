@@ -10,6 +10,7 @@ function connectRedis() {
         const redisConfig = {
             port: serverConfig.RedisPort,
             host: serverConfig.RedisHost,
+            maxRetriesPerRequest:null
         }
         return ()=>{
             if(!connection){
@@ -25,7 +26,7 @@ function connectRedis() {
 export const getRedis =connectRedis();
 
 
-// think of singleton pattern cause we dont wanna create a
+// think of singleton pattern cause we don't wanna create a
 //  new Redis connection every time so we came up with this approach
 
 //  1.getRedis is called and since if condition hits we will create a  new redis connection 
