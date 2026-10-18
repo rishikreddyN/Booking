@@ -9,5 +9,5 @@ type serverConfig = {
 }
 
 export const serverConfig: serverConfig = {
-    PORT: Number(process.env.PORT) || 3000
+    PORT: Number(process.env.PORT)
 }
