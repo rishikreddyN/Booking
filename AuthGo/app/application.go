@@ -2,8 +2,11 @@ package app
 
 import (
 	config "AuthGo/config/env"
+	"AuthGo/controllers"
 	"AuthGo/router"
-	
+	"AuthGo/services"
+
+	db "AuthGo/db/repositories"
 	"net/http"
 	"time"
 )
@@ -13,6 +16,7 @@ type Config struct {
 
 type Application struct {
 	Config Config
+	Store db.Storage
 }
 func NewConfig() Config {
 
@@ -31,6 +35,10 @@ func NewApplication(cfg Config) *Application {
 }
 
 func (app *Application) Run() error {
+	ur := db.NewUserRepository(db)
+	us:=services.NewUserService(ur)
+	uc:=controllers.NewUserController(us)
+	uRouter:=router.NewUserRouter(uc)
 	server := &http.Server{
 		Addr:         app.Config.Addr,
 		Handler:      router.SetupRouter(),

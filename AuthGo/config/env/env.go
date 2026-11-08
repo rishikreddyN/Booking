@@ -15,7 +15,6 @@ func LoadEnv() {
 
 }
 func GetString(key string,fallback string) string {
-	LoadEnv()
 	value,ok := os.LookupEnv(key)
 	if !ok {
 		return fallback
