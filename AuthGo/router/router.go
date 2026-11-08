@@ -5,11 +5,13 @@ import (
 	"github.com/go-chi/chi/v5/middleware"
 	"github.com/go-chi/chi/v5"
 )
-
-func SetupRouter() *chi.Mux {
+type Router interface{
+	Register (r chi.Router) 
+}
+func SetupRouter(userRouter Router) *chi.Mux {
 	router:=chi.NewRouter();
 	router.Use(middleware.Logger);
 	router.Get("/ping",controllers.PingHandler);
-	
+	userRouter.Register(router)
 	return router
 }
