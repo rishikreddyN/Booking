@@ -7,4 +7,5 @@ require (
 	github.com/go-chi/chi/v5 v5.5.0 // indirect
 	github.com/go-sql-driver/mysql v1.10.1 // indirect
 	github.com/joho/godotenv v1.5.1 // indirect
+	golang.org/x/crypto v0.58.0 // indirect
 )
