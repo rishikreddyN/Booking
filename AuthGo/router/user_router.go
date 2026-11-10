@@ -3,6 +3,7 @@ package router
 import (
     "AuthGo/controllers"
 	"github.com/go-chi/chi/v5"
+    "AuthGo/middlewares"
 )
 
 type UserRouter struct {
@@ -15,5 +16,7 @@ func NewUserRouter(userController *controllers.UserController) *UserRouter {
     }
 }
 func (ur *UserRouter) Register(r chi.Router) {
-    // Register user endpoints here
+    r.With(middlewares.JWTAuthMiddleware, middlewares.RequireAnyRole("user", "admin")).Get("/profile", ur.userController.GetUserById)
+	r.With(middlewares.UserCreateRequestValidator).Post("/signup", ur.userController.CreateUser)
+	r.With(middlewares.UserLoginRequestValidator).Post("/login", ur.userController.LoginUser)
 }

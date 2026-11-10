@@ -8,10 +8,11 @@ import (
 type Router interface{
 	Register (r chi.Router) 
 }
-func SetupRouter(userRouter Router) *chi.Mux {
+func SetupRouter(userRouter Router,RoleRouter Router) *chi.Mux {
 	router:=chi.NewRouter();
 	router.Use(middleware.Logger);
 	router.Get("/ping",controllers.PingHandler);
 	userRouter.Register(router)
+	RoleRouter.Register(router)
 	return router
 }

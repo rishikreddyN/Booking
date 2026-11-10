@@ -1,12 +1,16 @@
 package services
+
 import (
-	db "AuthGo/db/repositories"
 	env "AuthGo/config/env"
+	db "AuthGo/db/repositories"
+	"AuthGo/dto"
 	"AuthGo/models"
 	"AuthGo/utils"
 	"fmt"
 
+	"github.com/golang-jwt/jwt/v5"
 )
+
 type UserService interface {
 	GetUserById(id string) (*models.User, error)
 	CreateUser(payload *dto.CreateUserRequestDTO) (*models.User, error)
@@ -84,7 +88,7 @@ func (u *UserServiceImpl) LoginUser(payload *dto.LoginUserRequestDTO) (string, e
 	// Step 4. If password matches, print a JWT token, else return error saying password does not match
 	jwtPayload := jwt.MapClaims{
 		"email": user.Email,
-		"id":    user.Id,
+		"id":    user.ID,
 	}
 
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, jwtPayload)
@@ -99,3 +103,4 @@ func (u *UserServiceImpl) LoginUser(payload *dto.LoginUserRequestDTO) (string, e
 	fmt.Println("JWT Token:", tokenString)
 
 	return tokenString, nil
+}
