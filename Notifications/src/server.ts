@@ -35,12 +35,12 @@ app.listen(serverConfig.PORT, () => {
     logger.info("Mailer setup successfull")
 
     const samplePayload = {
-        to:"sample",
+        to:"nallarishik58@gmail.com",
         subject:"sample subject",
-        templateId:"sample-template",
+        templateId:"welcome",
         params:{
-            name:"John Doe",
-            orderId:"123456",
+            name:"Rishik Reddy",
+            appName:"Booking.com"
         }
     }
     addEmailToQueue(samplePayload);

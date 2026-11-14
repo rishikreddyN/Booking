@@ -3,6 +3,8 @@ import { NotificationDto } from "../dto/notification.dto";
 import { getRedis } from "../config/redis.config";
 import { MAILER_QUEUE } from "../queues/mailer.queue";
 import { MAILER_PAYLOAD } from "../producers/email.producer";
+import { renderMailTemplate } from "../templates/mailer/templates.handler";
+import { sendWelcomeEmail } from "../services/mailer.service";
 
 export const setupMailerWorker = () => {
 
@@ -13,6 +15,15 @@ export const setupMailerWorker = () => {
             if(job.name !== MAILER_PAYLOAD) {
                 throw new Error("Invalid job name");
             }
+            const payload = job.data;
+
+            console.log(`Processing email job for ${payload.to} with template ${payload.templateId}`);
+
+            const emailContent = await renderMailTemplate(payload.templateId, payload.params);
+
+            await sendWelcomeEmail(payload.to, payload.subject, emailContent);
+
+
 
             
         }, 
@@ -21,11 +32,14 @@ export const setupMailerWorker = () => {
         }
     )
 
-    emailProcessor.on("failed", () => {
-        console.error("Email processing failed");
+    emailProcessor.on("failed", (job, err) => {
+    console.error(
+        `Email job ${job?.id} failed:`,
+        err.message
+        );
     });
 
-    emailProcessor.on("completed", () => {
-        console.log("Email processing completed successfully");
+    emailProcessor.on("completed", (job) => {
+    console.log(`Email job ${job.id} completed successfully`);
     });
 }
