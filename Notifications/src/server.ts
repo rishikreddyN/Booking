@@ -35,11 +35,11 @@ app.listen(serverConfig.PORT, () => {
     logger.info("Mailer setup successfull")
 
     const samplePayload = {
-        to:"nallarishik58@gmail.com",
+        to:"venkats010203@gmail.com",
         subject:"sample subject",
         templateId:"welcome",
         params:{
-            name:"Rishik Reddy",
+            name:"Venkat Reddy",
             appName:"Booking.com"
         }
     }
